@@ -1,0 +1,63 @@
+import openai
+import random
+from os import path
+
+
+from gpt import GPT
+from gpt import Example
+
+gpt = GPT(engine="davinci",
+          temperature=0.7,
+          max_tokens=250)
+
+gpt.add_example(Example('adding elements to a list using add() method',
+                        'var primeNumbers = new List<int>();\n'
+                        'primeNumbers.Add(1);\n'
+                        'primeNumbers.Add(3);\n'
+                        'primeNumbers.Add(5);\n'
+                        'primeNumbers.Add(7);\n'
+                        'Console.WriteLine("No of elements: "+ primeNumbers.Count);\n'))
+gpt.add_example(Example('adding elements to a list using add() method',
+                        'var cities = new List<string>();\n'
+                        'cities.Add("New York");\n'
+                        'cities.Add("London");\n'
+                        'cities.Add("Mumbai");\n'
+                        'cities.Add("Chicago");\n'
+                        'Console.WriteLine("No of elements: " + cities.Count);\n'))
+gpt.add_example(Example('Add Custom Class Objects in List',
+                        'var students = new List<Student>() { \n'
+                        'new Student(){ Id = 1, Name="Bill"},\n'
+                        'new Student(){ Id = 2, Name="Steve"}\n'
+                        'new Student(){ Id = 3, Name="Ram"}\n'
+                        'new Student(){ Id = 4, Name="Abdul"}\n'
+                        ' };\n'
+                        'Console.WriteLine("No of elements: " + students.Count);\n'))
+gpt.add_example(Example('The following example displays "Hello World!!" on the console.',
+                        'string message = "Hello World!!";\n'
+                        'Console.WriteLine(message);\n'))
+gpt.add_example(Example('The following declares and initializes variables of different data types.',
+                        'int num = 100;\n'
+                        'float rate = 10.2f;\n'
+                        'decimal amount = 100.50M;\n'
+                        'char code = "C";\n'
+                        'bool isValid = true;\n'
+                        'string name = "Steve";\n'))
+gpt.add_example(Example('Variables can be declared first and initialized later.',
+                        'int num;\n' 
+                        'num = 100;\n'))
+gpt.add_example(Example('The value of a variable can be changed anytime after initializing it',
+                        'int num = 100;\n'
+                        'num = 200;\n'))
+gpt.add_example(Example('Multiple variables of the same data type can be declared and initialized in a single line separated by commas.',
+                        'int i, j = 10, k = 100;\n'))
+
+
+
+
+
+
+prompt = "create a list of countries from north america"
+
+output = gpt.submit_request(prompt)
+
+print(output.choices[0].text)
